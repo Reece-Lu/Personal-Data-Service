@@ -13,9 +13,14 @@ public class Swagger3Config {
 
     @Bean
     public OpenAPI openApiInformation() {
+
         Server localServer = new Server()
                 .url("http://localhost:9090")
                 .description("Localhost Server URL");
+
+        Server productionServer = new Server()
+                .url("https://www.meetyuwen.com/springapp")
+                .description("Production Server URL");
 
         Contact contact = new Contact()
                 .email("luyuwen2000@gmail.com")
@@ -27,6 +32,9 @@ public class Swagger3Config {
                 .version("V1.0.0")
                 .license(new License().name("Apache 2.0").url("http://springdoc.org"));
 
-        return new OpenAPI().info(info).addServersItem(localServer);
+        return new OpenAPI()
+                .info(info)
+                .addServersItem(localServer)
+                .addServersItem(productionServer);
     }
 }
