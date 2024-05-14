@@ -27,9 +27,10 @@ public class Swagger3Config {
                 .name("Yuwen Lu");
 
         Info info = new Info()
-                .contact(contact)
-                .title("Athletic AI API Documentation")
+                .title("Personal Website API Documentation")
                 .version("V1.0.0")
+                .description("This API provides functionalities for managing various aspects of the personal website, including but not limited to notes, user management, and other related services. It allows for CRUD operations, file uploads, and other interactions.")
+                .contact(contact)
                 .license(new License().name("Apache 2.0").url("http://springdoc.org"));
 
         return new OpenAPI()
