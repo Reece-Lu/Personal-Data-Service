@@ -10,13 +10,9 @@ public class VmStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime startupTime;
-    private long uptime;
-    private double networkTotal;
     private double diskUsed;
     private long memoryUsed;
     private double cpuUsage;
-    private double cpuLoadAverage;
     private LocalDateTime timestamp;
 
     @Transient
@@ -26,7 +22,8 @@ public class VmStatus {
         this.memoryUsagePercentage = memoryUsagePercentage;
     }
 
-    public double getMemoryUsagePercentage(double memoryUsagePercentage) {
-        return this.memoryUsagePercentage;
+    public double getMemoryUsagePercentage() {
+        return memoryUsagePercentage;
     }
 }
+

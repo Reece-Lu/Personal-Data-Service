@@ -23,7 +23,7 @@ public class VmStatusController {
     }
 
     @GetMapping("/last30days")
-    public List<VmStatus> getLast30DaysVmStatus() {
-        return vmStatusService.getLast30DaysVmStatus();
+    public List<VmStatus> getLast3DaysVmStatus() {
+        return vmStatusService.getLast3DaysVmStatus();
     }
 }

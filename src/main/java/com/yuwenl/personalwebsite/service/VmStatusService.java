@@ -1,5 +1,9 @@
 package com.yuwenl.personalwebsite.service;
 
+import java.nio.file.FileStore;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.lang.management.ManagementFactory;
 import com.sun.management.OperatingSystemMXBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +14,8 @@ import com.yuwenl.personalwebsite.repository.VmStatusRepository;
 import com.yuwenl.personalwebsite.repository.DailyPerformanceRepository;
 
 import java.lang.management.RuntimeMXBean;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,18 +38,32 @@ public class VmStatusService {
     }
 
     public void recordVmStatus() {
-        LocalDateTime startupTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(runtimeMXBean.getStartTime()), ZoneId.systemDefault());
-        long uptime = runtimeMXBean.getUptime();
         long memoryUsed = osBean.getTotalMemorySize() - osBean.getFreeMemorySize();
         double cpuUsage = osBean.getCpuLoad() * 100;
+        double diskUsed = getDiskUsed();
 
         VmStatus vmStatus = new VmStatus();
-        vmStatus.setStartupTime(startupTime);
-        vmStatus.setUptime(uptime);
         vmStatus.setMemoryUsed(memoryUsed);
         vmStatus.setCpuUsage(cpuUsage);
+        vmStatus.setDiskUsed(diskUsed);
         vmStatus.setTimestamp(LocalDateTime.now());
         vmStatusRepository.save(vmStatus);
+    }
+
+    private double getDiskUsed() {
+        try {
+            for (Path root : FileSystems.getDefault().getRootDirectories()) {
+                FileStore store = Files.getFileStore(root);
+                long totalSpace = store.getTotalSpace(); // total disk space
+                long usableSpace = store.getUsableSpace(); // free disk space
+                long usedSpace = totalSpace - usableSpace; // used disk space
+
+                return ((double) usedSpace / totalSpace) * 100; // disk usage percentage
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public double getDailyPerformanceScore(LocalDateTime day) {
@@ -68,10 +84,10 @@ public class VmStatusService {
         double averageCpuUsage = totalCpuUsage / recordCount;
         double averageMemoryUsagePercentage = totalMemoryUsagePercentage / recordCount;
 
-        // Performance score is calculated based on the average CPU usage and memory usage percentage
+        // calculate performance score
         double performanceScore = averageCpuUsage * 0.6 + averageMemoryUsagePercentage * 0.4;
 
-        // Save the daily performance score to the database
+        // save daily performance score
         DailyPerformance dailyPerformance = new DailyPerformance();
         dailyPerformance.setDate(day.toLocalDate());
         dailyPerformance.setPerformanceScore(performanceScore);
@@ -90,9 +106,9 @@ public class VmStatusService {
         return dailyPerformanceRepository.findAllByDateBetween(startDate, today);
     }
 
-    public List<VmStatus> getLast30DaysVmStatus() {
+    public List<VmStatus> getLast3DaysVmStatus() {
         LocalDateTime today = LocalDateTime.now();
-        LocalDateTime startDate = today.minusDays(30);
+        LocalDateTime startDate = today.minusDays(3);
         List<VmStatus> vmStatuses = vmStatusRepository.findAllByTimestampBetween(startDate, today);
 
         return vmStatuses.stream().map(status -> {

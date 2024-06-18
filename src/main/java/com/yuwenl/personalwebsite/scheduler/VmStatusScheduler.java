@@ -11,7 +11,7 @@ public class VmStatusScheduler {
     @Autowired
     private VmStatusService vmStatusService;
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 300000)
     public void scheduleVmStatusRecording() {
         vmStatusService.recordVmStatus();
     }
