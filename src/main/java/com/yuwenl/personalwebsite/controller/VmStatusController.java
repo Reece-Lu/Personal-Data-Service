@@ -22,7 +22,7 @@ public class VmStatusController {
         return vmStatusService.getLast60DaysPerformanceScores();
     }
 
-    @GetMapping("/last30days")
+    @GetMapping("/last3days")
     public List<VmStatus> getLast3DaysVmStatus() {
         return vmStatusService.getLast3DaysVmStatus();
     }
