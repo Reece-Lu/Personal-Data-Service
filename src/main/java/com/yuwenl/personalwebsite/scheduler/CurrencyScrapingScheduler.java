@@ -11,11 +11,9 @@ public class CurrencyScrapingScheduler {
     @Autowired
     private CurrencyScrapingService currencyScrapingService;
 
-    @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "0 0 */4 * * ?")
     public void scheduleCurrencyRateFetching() {
-        System.out.println("执行定时任务：抓取汇率数据");
         currencyScrapingService.fetchAndSaveCADRates();
-        System.out.println("执行定时任务：抓取美元汇率数据");
         currencyScrapingService.fetchAndSaveUSDRates();
     }
 }

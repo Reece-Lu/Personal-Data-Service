@@ -14,13 +14,13 @@ public class Swagger3Config {
     @Bean
     public OpenAPI openApiInformation() {
 
-        Server localServer = new Server()
-                .url("http://localhost:9090")
-                .description("Localhost Server URL");
-
         Server productionServer = new Server()
                 .url("https://www.meetyuwen.com/springapp")
                 .description("Production Server URL");
+
+        Server localServer = new Server()
+                .url("http://localhost:9090")
+                .description("Localhost Server URL");
 
         Contact contact = new Contact()
                 .email("luyuwen2000@gmail.com")
