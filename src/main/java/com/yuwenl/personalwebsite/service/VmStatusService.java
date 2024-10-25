@@ -30,7 +30,7 @@ public class VmStatusService {
 
     private final OperatingSystemMXBean osBean;
     private final RuntimeMXBean runtimeMXBean;
-    private static final long TOTAL_MEMORY = 16 * 1024 * 1024 * 1024L; // 16GB in bytes
+    private static final long TOTAL_MEMORY = 4 * 1024 * 1024 * 1024L; // 16GB in bytes
 
     public VmStatusService() {
         this.osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
