@@ -19,7 +19,7 @@ public class FileDownloadController {
     private final Path fileStorageLocation;
 
     public FileDownloadController() {
-        this.fileStorageLocation = Paths.get("/home/azureuser/documents").toAbsolutePath().normalize();
+        this.fileStorageLocation = Paths.get("/root/documents").toAbsolutePath().normalize();
 //        this.fileStorageLocation = Paths.get("/Users/yuwen/Desktop").toAbsolutePath().normalize();
     }
 

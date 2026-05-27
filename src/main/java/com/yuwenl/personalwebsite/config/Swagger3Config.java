@@ -35,7 +35,7 @@ public class Swagger3Config {
 
         return new OpenAPI()
                 .info(info)
-                .addServersItem(localServer)
-                .addServersItem(productionServer);
+                .addServersItem(productionServer)
+                .addServersItem(localServer);
     }
 }

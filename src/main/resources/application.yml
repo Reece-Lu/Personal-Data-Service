@@ -4,8 +4,8 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://104.42.29.134:3306/personal_website?serverTimezone=GMT-8
-    username: root
+    url: jdbc:mysql://192.3.134.109:3306/personal_website?serverTimezone=GMT-8
+    username: vmuser
     password: Tapebook123#
     hikari:
       minimum-idle: 3
@@ -32,4 +32,4 @@ spring:
 app:
   file:
 #    storage-location: /Users/yuwen/Downloads/notescover
-    storage-location: /home/azureuser/notescover
+    storage-location: /root/notescover
